@@ -1,4 +1,4 @@
-# [TruQ user API](https://github.com/olawale-kareem/TruQ-backend)
+# [TruQ user API](https://github.com/olawale-kareem/TruQ-user-backend)
 
 TruQ User API Service
 
