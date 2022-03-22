@@ -23,7 +23,7 @@ TruQ User API Service
 
 ```
 
-## Open ApI interface
+## Open API interface
 
 As long as the containers are running the open api services are served on the endpoint below.
 
