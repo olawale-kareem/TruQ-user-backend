@@ -21,6 +21,10 @@ class TestViews(TestSetup):
             self.register_url, self.user_data, format='json')
         res = self.client.post(
             self.login_url, self.user_data, format='json')
+        user = auth.authenticate(
+            email=self.user_data['email'], password=self.user_data['password'])
+        self.assertNotEqual(user, None)
+        self.assertEqual(user.is_authenticated, True)
         self.assertEqual(res.status_code, 200)
 
     def test_user_cannot_login_with_unregistered_data(self):
@@ -28,36 +32,17 @@ class TestViews(TestSetup):
             self.login_url, self.user_data, format='json')
         self.assertEqual(res.status_code, 401)
 
-    def test_display_all_registered_user(self):
+    def test_unauthenticated_user_cannot_access_user_list(self):
         res = self.client.get(
             self.user_url, format='json')
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 401)
 
-    # def test_logout_all_user(self):
-    #     self.client.post(
-    #         self.register_url, self.user_data, format="json")
-    #     self.client.post(
-    #         self.login_url, self.user_data, format="json")
-    #     res = self.client.get(
-    #         self.logout_all_url, format="json")
-    #     self.assertEqual(res.status_code, 204)
-
-    def test_user_can_login_and_logout(self):
+    def test_unathenticated_user_cannot_logout_all_user(self):
 
         self.client.post(
-            self.register_url, self.user_data, format='json')
+            self.register_url, self.user_data, format="json")
         self.client.post(
-            self.login_url, self.user_data, format='json')
-        user = auth.authenticate(
-            email=self.user_data['email'], password=self.user_data['password'])
-        self.assertNotEqual(user, None)
-        self.assertEqual(user.is_authenticated, True)
-
-        user = User.objects.get(self.user_data['email'])
-        refresh_token = user.token()['refresh']
-
-        res = self.client.post(self.logout_user, refresh_token, format='json')
-        # user = auth.authenticate(
-        #     email=self.user_data['email'], password=self.user_data['password'])
-        # self.assertEqual(user.is_authenticated, False)
-        self.assertEqual(res, 204)
+            self.login_url, self.user_data, format="json")
+        res = self.client.get(
+            self.logout_all_url, format="json")
+        self.assertEqual(res.status_code, 401)
