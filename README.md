@@ -14,7 +14,7 @@ TruQ User API Service
 
 ## Getting Started
 
-```docker
+```
 
 1. clone project repository:   git clone git@github.com:olawale-kareem/TruQ-user-backend.git
 2. change to project folder:   cd TruQ-user-backend
@@ -23,11 +23,22 @@ TruQ User API Service
 
 ```
 
+## Open ApI interface
+
+As long as the containers are running the open api services are served on the endpoint below.
+
+```
+
+open api:   http://localhost:8080/swagger/
+api docs:   http://localhost:8080/redoc/
+
+```
+
 ## Access running services/containers
 
 App services in active containers can be accessed via the commands below. Once in the respective containers django and postgres commands can be used.
 
-```services
+```
 
 web: docker exec -it truq_backend bash
 db : docker exec -it postgresDB  psql -U postgres
@@ -36,9 +47,9 @@ db : docker exec -it postgresDB  psql -U postgres
 
 ## Running Tests
 
-Before running the tests with the following command make sure that the web service is up and running. Run the following command below
+Before running the tests with the following command please ensure that the web service is up and running. Run the following command below
 
-```web service
+```
 
 docker exec -it truq_backend bash;
 python manage.py test
